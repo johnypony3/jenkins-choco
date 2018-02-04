@@ -160,6 +160,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $tag = $jenkinsInfo.tag
 
     $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
+    Write-Host "downloadUrl: $downloadUrl"
 
     $semVersion = toSemver $ogversion
     Write-Host "semVersion: $semVersion"
@@ -167,8 +168,6 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $version = $semVersion.VersionString
     Write-Host "version: $version"
 
-    $semVersion
-    $version
 
     $overrideExistingPackageCheck = $false
 
