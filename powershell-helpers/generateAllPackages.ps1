@@ -8,7 +8,6 @@ $jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
 Try {
   $jenkinsInfos = Invoke-RestMethod -Uri $jenkinsInfosUrl -Credential $credential
   $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Credential $credential
-  $jenkinsRepoInfo
 }
 Catch {
   Write-Host 'error calling github'
@@ -39,10 +38,7 @@ $jenkinsInfos | % {
       Write-Host "skipping version: $ogversion because its empty."
       return;
     }
-#https://github.com/jenkinsci/jenkins/archive/hudson-1.388.zip
-#https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags/hudson-1_388
-  #$downloadUrl = $_.html_url
-  $_.url
+
   $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
   $jenkinsInfo
   return 1
