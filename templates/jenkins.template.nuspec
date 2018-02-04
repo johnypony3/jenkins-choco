@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
+  <metadata>
+    <id>jenkins</id>
+    <version></version>
+    <authors>Jenkins</authors>
+    <owners>johnypony3</owners>
+    <licenseUrl>https://jenkins.io/license/</licenseUrl>
+    <projectUrl></projectUrl>
+    <iconUrl>https://wiki.jenkins.io/download/attachments/2916393/logo.png?version=1&modificationDate=1302753947000&api=v2</iconUrl>
+    <description></description>
+    <summary></summary>
+    <releaseNotes></releaseNotes>
+    <tags>continuous-integration continuous-delivery continuous-deployment java groovy jenkins pipelines-as-code devops</tags>
+    <packageSourceUrl>https://github.com/johnypony3/jenkins-choco</packageSourceUrl>
+    <docsUrl>https://jenkins.io/doc/</docsUrl>
+    <bugTrackerUrl>https://issues.jenkins-ci.org/secure/Dashboard.jspa</bugTrackerUrl>
+    <title>Jenkins</title>
+  </metadata>
+  <files>
+    <file src="..\payload\**" target="payload"/>
+    <file src="..\tools\**" target="tools"/>
+    <file src=".version" target="tools"/>
+  </files>
+</package>
