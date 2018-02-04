@@ -39,6 +39,7 @@ $jenkinsInfos | % {
       return;
     }
 
+  $_
   $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
   $jenkinsInfo
   return 1
