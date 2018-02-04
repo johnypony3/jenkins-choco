@@ -8,7 +8,7 @@ $jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
 Try {
   $jenkinsInfos = Invoke-RestMethod -Uri $jenkinsInfosUrl -Credential $credential
   $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Creden tial $credential
-  $jenkinsInfos
+  $jenkinsRepoInfo
 }
 Catch {
   Write-Host 'error calling github'
