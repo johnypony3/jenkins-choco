@@ -144,7 +144,9 @@ function GetHash{
 
 $jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
-    $ogversion = $_.ref.replace("refs/tags/","")
+
+    $ogversion = $_.ref.replace($_.ref.split("-")[0], "")
+    Write-Host "ogversion: $ogversion"
 
     $skip = [string]::IsNullOrEmpty($ogversion)
 
@@ -157,10 +159,14 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
     $tag = $jenkinsInfo.tag
 
-    #https://github.com/jenkinsci/jenkins/archive/jenkins-2.104.zip
     $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
+
     $semVersion = toSemver $ogversion
+    Write-Host "semVersion: $semVersion"
+
     $version = $semVersion.VersionString
+    Write-Host "version: $version"
+
     $semVersion
     $version
 
