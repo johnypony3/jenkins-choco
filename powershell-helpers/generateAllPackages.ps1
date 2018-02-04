@@ -40,7 +40,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
     }
 
   $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
-  $jenkinsInfo.object
+  $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
+  $jenkinsInfo
 }
 
 return 1
