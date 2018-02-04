@@ -28,7 +28,6 @@ Catch {
   return 1
 }
 
-$jenkinsInfos
 $jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
     $ogversion = $_.ref
