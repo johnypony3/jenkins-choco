@@ -4,6 +4,7 @@ $secPasswd = ConvertTo-SecureString $ENV:GITHUB_PASSWORD -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($ENV:GITHUB_USERNAME, $secpasswd)
 $jenkinsInfosUrl = 'https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags'
 $jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
+$jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
 
 Try {
   $jenkinsInfos = Invoke-RestMethod -Uri $jenkinsInfosUrl -Credential $credential
@@ -27,24 +28,6 @@ Catch {
   Write-Host "exiting"
   return 1
 }
-
-$jenkinsInfos | Select-Object -First 1 | % {
-    $skip = $false
-    $ogversion = $_.ref
-
-    $skip = [string]::IsNullOrEmpty($ogversion)
-
-    if ($skip) {
-      Write-Host "skipping version: $ogversion because its empty."
-      return;
-    }
-
-  $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
-  $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
-  $jenkinsInfo
-}
-
-return 1
 
 $packageOutputPath = Join-Path -Path $PSScriptRoot -ChildPath 'packages'
 mkdir $packageOutputPath
@@ -139,7 +122,6 @@ function BuildInfoFileGenerator {
   $hash | ConvertTo-Json | Out-File $versionPath
 }
 
-
 function CheckIfUploadedToChoco {
   param([string]$chocoUrl)
 
@@ -160,6 +142,27 @@ function GetHash{
   return $hash.Hash
 }
 
+$jenkinsInfos | Select-Object -First 5 | % {
+    $skip = $false
+    $ogversion = $_.ref
+
+    $skip = [string]::IsNullOrEmpty($ogversion)
+
+    if ($skip) {
+      Write-Host "skipping version: $ogversion because its empty."
+      return;
+    }
+
+  $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
+  $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
+  $tag = $jenkinsInfo.tag
+
+  #https://github.com/jenkinsci/jenkins/archive/jenkins-2.104.zip
+  $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
+  #$jenkinsInfo
+  $downloadUrl
+}
+
 $jenkinsInfos | % {
     $skip = $false
     $ogversion = $_.ref
@@ -170,8 +173,6 @@ $jenkinsInfos | % {
       Write-Host "skipping version: $ogversion because its empty."
       return;
     }
-#https://github.com/jenkinsci/jenkins/archive/hudson-1.388.zip
-#https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags/hudson-1_388
 
     $downloadUrl = $_.html_url
     $semVersion = toSemver $ogversion
