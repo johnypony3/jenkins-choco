@@ -231,7 +231,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     [xml]$nuspec = Get-Content $nuspecTemplatePath
     $nuspec.package.metadata.id = 'jenkins'
     $nuspec.package.metadata.title = 'jenkins'
-    $nuspec.package.metadata.version = $_.ref
+    $nuspec.package.metadata.version = $version
     $nuspec.package.metadata.projectUrl = $jenkinsRepoInfo.homepage
     $nuspec.package.metadata.description = $jenkinsRepoInfo.description
     $nuspec.package.metadata.summary = $jenkinsRepoInfo.description
