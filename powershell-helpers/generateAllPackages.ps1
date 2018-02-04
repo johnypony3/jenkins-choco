@@ -168,7 +168,6 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $version = $semVersion.VersionString
     Write-Host "version: $version"
 
-
     $overrideExistingPackageCheck = $false
 
     If (!([string]::IsNullOrEmpty($ENV:COMPARISON_VERSION))){
@@ -189,7 +188,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    Write-Host "working on version:"$version
+    Write-Host "working on version: "$version
 
     $packageName = "jenkins.$version.nupkg"
     Write-Host $packageName
