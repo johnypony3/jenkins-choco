@@ -234,5 +234,5 @@ if (!($push)){
 }
 
 Get-ChildItem $packageOutputPath -Filter *.nupkg | % {
-  choco push $_.FullName
+  #choco push $_.FullName
 }
