@@ -29,7 +29,7 @@ Catch {
 }
 
 $jenkinsInfos
-$jenkinsInfos | % {
+$jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
     $ogversion = $_.ref
 
@@ -40,10 +40,8 @@ $jenkinsInfos | % {
       return;
     }
 
-  $_
   $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
-  $jenkinsInfo
-  return 1
+  $jenkinsInfo.object
 }
 
 return 1
