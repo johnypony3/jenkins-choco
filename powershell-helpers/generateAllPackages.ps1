@@ -213,7 +213,11 @@ $jenkinsInfos | Select-Object -First 1 | % {
 
     $repoInfo.assets | % {
         $fileName = $_.name
+        Write-Host "fileName: $fileName"
+
         $fileNameFull = Join-Path -Path $packagePayloadPath -ChildPath $fileName
+        Write-Host "fileNameFull: $fileNameFull"
+
         Invoke-WebRequest -OutFile $fileNameFull -Uri $downloadUrl
         Write-Host "  -> downloaded $fileName"
         $fileHash = GetHash $fileNameFull
