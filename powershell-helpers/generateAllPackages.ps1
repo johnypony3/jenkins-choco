@@ -142,7 +142,7 @@ function GetHash{
   return $hash.Hash
 }
 
-$jenkinsInfos | Select-Object -First 5 | % {
+$jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
     $ogversion = $_.ref
 
