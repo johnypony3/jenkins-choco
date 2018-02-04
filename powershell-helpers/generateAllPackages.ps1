@@ -163,6 +163,8 @@ $jenkinsInfos | Select-Object -First 5 | % {
   $downloadUrl
 }
 
+return 1
+
 $jenkinsInfos | % {
     $skip = $false
     $ogversion = $_.ref
