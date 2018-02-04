@@ -153,32 +153,16 @@ $jenkinsInfos | Select-Object -First 5 | % {
       return;
     }
 
-  $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
-  $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
-  $tag = $jenkinsInfo.tag
+    $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
+    $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
+    $tag = $jenkinsInfo.tag
 
-  #https://github.com/jenkinsci/jenkins/archive/jenkins-2.104.zip
-  $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
-  #$jenkinsInfo
-  $downloadUrl
-}
-
-return 1
-
-$jenkinsInfos | % {
-    $skip = $false
-    $ogversion = $_.ref
-
-    $skip = [string]::IsNullOrEmpty($ogversion)
-
-    if ($skip) {
-      Write-Host "skipping version: $ogversion because its empty."
-      return;
-    }
-
-    $downloadUrl = $_.html_url
+    #https://github.com/jenkinsci/jenkins/archive/jenkins-2.104.zip
+    $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
     $semVersion = toSemver $ogversion
     $version = $semVersion.VersionString
+    $semVersion
+    $version
 
     $overrideExistingPackageCheck = $false
 
