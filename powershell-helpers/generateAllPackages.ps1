@@ -145,7 +145,7 @@ function GetHash{
 $jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
 
-    $ogversion = $_.ref.replace($_.ref.split("-")[0], "")
+    $ogversion = $_.ref.replace($_.ref.split("-")[0], "").replace("-", "").replace("_", ".")
     Write-Host "ogversion: $ogversion"
 
     $skip = [string]::IsNullOrEmpty($ogversion)
