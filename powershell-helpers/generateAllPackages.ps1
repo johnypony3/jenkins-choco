@@ -2,7 +2,7 @@ Import-Module -Name C:\projects\jenkins-choco\powershell-helpers\SemverSort
 
 $secPasswd = ConvertTo-SecureString $ENV:GITHUB_PASSWORD -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($ENV:GITHUB_USERNAME, $secpasswd)
-$jenkinsInfosUrl = 'https://github.com/jenkinsci/jenkins/releases'
+$jenkinsInfosUrl = 'https://api.github.com/repos/jenkinsci/jenkins/releases'
 $jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
 
 Try {
@@ -28,6 +28,26 @@ Catch {
   return 1
 }
 
+$jenkinsInfos | % {
+    $skip = $false
+    $ogversion = $_.ref
+
+    $skip = [string]::IsNullOrEmpty($ogversion)
+
+    if ($skip) {
+      Write-Host "skipping version: $ogversion because its empty."
+      return;
+    }
+#https://github.com/jenkinsci/jenkins/archive/hudson-1.388.zip
+#https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags/hudson-1_388
+  #$downloadUrl = $_.html_url
+  $_.url
+  $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
+  $jenkinsInfo
+}
+
+return 1
+
 $packageOutputPath = Join-Path -Path $PSScriptRoot -ChildPath 'packages'
 mkdir $packageOutputPath
 
@@ -44,9 +64,9 @@ $versionPath = Join-Path -Path $PSScriptRoot -ChildPath .version
 $assetPath = Join-Path -Path $PSScriptRoot -ChildPath payload
 $checksumType = "MD5"
 
-choco apiKey -k $ENV:CHOCO_KEY -source https://push.chocolatey.org/
+choco apiKey -k '2ab16200-a308-4130-8ddb-78f155be2c2a' -source https://push.chocolatey.org/
 
-$push = $true
+$push = $false
 
 function Match{
   param (
@@ -144,7 +164,7 @@ function GetHash{
 
 $jenkinsInfos | % {
     $skip = $false
-    $ogversion = $_.tag_name
+    $ogversion = $_.ref
 
     $skip = [string]::IsNullOrEmpty($ogversion)
 
@@ -152,6 +172,8 @@ $jenkinsInfos | % {
       Write-Host "skipping version: $ogversion because its empty."
       return;
     }
+#https://github.com/jenkinsci/jenkins/archive/hudson-1.388.zip
+#https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags/hudson-1_388
 
     $downloadUrl = $_.html_url
     $semVersion = toSemver $ogversion
@@ -216,11 +238,11 @@ $jenkinsInfos | % {
     [xml]$nuspec = Get-Content $nuspecTemplatePath
     $nuspec.package.metadata.id = 'jenkins'
     $nuspec.package.metadata.title = 'jenkins'
-    $nuspec.package.metadata.version = $version
+    $nuspec.package.metadata.version = $_.ref
     $nuspec.package.metadata.projectUrl = $jenkinsRepoInfo.homepage
     $nuspec.package.metadata.description = $jenkinsRepoInfo.description
     $nuspec.package.metadata.summary = $jenkinsRepoInfo.description
-    $nuspec.package.metadata.releaseNotes = $_.body
+    $nuspec.package.metadata.releaseNotes = '$_.body'
     $nuspec.Save($nuspecPath)
 
     BuildInfoFileGenerator $ogversion
@@ -234,5 +256,5 @@ if (!($push)){
 }
 
 Get-ChildItem $packageOutputPath -Filter *.nupkg | % {
-  #choco push $_.FullName
+  choco push $_.FullName
 }
