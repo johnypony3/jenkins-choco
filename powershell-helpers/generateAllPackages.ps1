@@ -1,4 +1,5 @@
 Import-Module -Name C:\projects\jenkins-choco\powershell-helpers\SemverSort
+$PSVersionTable.PSVersion
 Import-Module BitsTransfer
 
 $jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
