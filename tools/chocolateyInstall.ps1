@@ -2,10 +2,12 @@
 $ErrorActionPreference = 'Stop';
 
 $packageName = 'jenkins'
-$zipFile = "jenkins.zip"
+
+$fileName = "jenkins.zip"
+
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$zipFilePath = "$toolsDir\..\payload\$zipFile"
-$msiPath = "$ENV:TEMP\$zipFile"
+$zipFilePath = "$toolsDir\..\payload\$zipFile.zip"
+$msiPath = "$toolsDir\..\payload\$zipFile.msi"
 
 Write-Host "toolsDir: $toolsDir"
 Write-Host "zipFilePath: $zipFilePath"
@@ -17,12 +19,11 @@ Add-Type -AssemblyName System.IO.Compression.FileSystem
 $packageArgs = @{
   packageName   = $packageName
   fileType      = 'msi'
-  url           = $msiPath
+  file           = $msiPath
   silentArgs    = "/qn /norestart /l*v `"$($env:TEMP)\$($packageName).$($env:chocolateyPackageVersion).MsiInstall.log`"" # ALLUSERS=1 DISABLEDESKTOPSHORTCUT=1 ADDDESKTOPICON=0 ADDSTARTMENU=0
   validExitCodes= @(0, 3010, 1641)
-
 }
 
-Write-Host "packageArgs: $packageArgs"
+Write-Host "packageArgs: ($packageArgs | Out-string)"
 
 Install-ChocolateyInstallPackage @packageArgs
