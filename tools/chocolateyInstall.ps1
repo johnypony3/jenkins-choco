@@ -4,11 +4,13 @@ $ErrorActionPreference = 'Stop';
 $packageName = 'jenkins'
 $zipFile = "jenkins.zip"
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
+$zipFile = "$toolsDir\..\payload\jenkins.zip"
 
 $toolsDir
+$zipFile
 
-#Add-Type -AssemblyName System.IO.Compression.FileSystem
-#[System.IO.Compression.ZipFile]::ExtractToDirectory('.\payload\jenkins.zip', $ENV:TEMP)
+Add-Type -AssemblyName System.IO.Compression.FileSystem
+[System.IO.Compression.ZipFile]::ExtractToDirectory($zipFile, $ENV:TEMP)
 
 #$packageArgs = @{
 #  packageName   = $packageName
