@@ -3,11 +3,9 @@ $ErrorActionPreference = 'Stop';
 
 $packageName = 'jenkins'
 
-$fileName = "jenkins.zip"
-
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$zipFilePath = "$toolsDir\..\payload\$fileName.zip"
-$msiPath = "$toolsDir\..\payload\$fileName.msi"
+$zipFilePath = "$toolsDir\..\payload\$packageName.zip"
+$msiPath = "$toolsDir\..\payload\$packageName.msi"
 
 Write-Host "toolsDir: $toolsDir"
 Write-Host "zipFilePath: $zipFilePath"
