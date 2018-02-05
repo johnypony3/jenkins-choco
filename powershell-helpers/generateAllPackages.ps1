@@ -207,7 +207,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     Copy-Item $verificationTemplatePath $verificationPath
 
     $repoInfo.assets | % {
-        $fileName = "jenkins.$version.zip"
+        $fileName = "jenkins.zip"
         Write-Host "fileName: $fileName"
 
         $fileNameFull = Join-Path -Path $packagePayloadPath -ChildPath $fileName
