@@ -5,6 +5,8 @@ $packageName = 'jenkins'
 $zipFile = "jenkins.zip"
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
 
+$toolsDir
+
 #Add-Type -AssemblyName System.IO.Compression.FileSystem
 #[System.IO.Compression.ZipFile]::ExtractToDirectory('.\payload\jenkins.zip', $ENV:TEMP)
 
