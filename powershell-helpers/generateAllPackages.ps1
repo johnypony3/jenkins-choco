@@ -8,7 +8,7 @@ $WebResponse= Invoke-WebRequest $jenkinsStableMirror
 $jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
 
 Try {
-  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml –notlike '*sha256'}
+  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*sha256'}
   $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Credential $credential
 }
 Catch {
