@@ -4,12 +4,10 @@ $secPasswd = ConvertTo-SecureString $ENV:GITHUB_PASSWORD -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($ENV:GITHUB_USERNAME, $secpasswd)
 $jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
 $jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
-$jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
 
 Try {
   $WebResponse = Invoke-WebRequest $jenkinsStableMirror
   $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip'}
-  $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Credential $credential
 }
 Catch {
   Write-Host 'error calling github'
@@ -227,7 +225,6 @@ $jenkinsInfos | Select-Object -First 1 | % {
 
     [xml]$nuspec = Get-Content $nuspecTemplatePath
     $nuspec.package.metadata.version = $version
-    $nuspec.package.metadata.projectUrl = $jenkinsRepoInfo.homepage
     $nuspec.Save($nuspecPath)
 
     BuildInfoFileGenerator $ogversion

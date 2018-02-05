@@ -7,7 +7,7 @@
     <authors>The Jenkins Team</authors>
     <owners>johnypony3</owners>
     <licenseUrl>https://jenkins.io/license/</licenseUrl>
-    <projectUrl>Jenkins</projectUrl>
+    <projectUrl>http://jenkins-ci.org</projectUrl>
     <iconUrl>https://wiki.jenkins.io/download/attachments/2916393/logo.png</iconUrl>
     <description>
 Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron. Among those things, current Jenkins focuses on the following two jobs:
