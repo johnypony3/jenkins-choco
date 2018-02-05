@@ -1,9 +1,6 @@
 Import-Module -Name C:\projects\jenkins-choco\powershell-helpers\SemverSort
 
-$secPasswd = ConvertTo-SecureString $ENV:GITHUB_PASSWORD -AsPlainText -Force
-$credential = New-Object System.Management.Automation.PSCredential($ENV:GITHUB_USERNAME, $secpasswd)
 $jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
-$jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
 
 Try {
   $WebResponse = Invoke-WebRequest $jenkinsStableMirror
@@ -154,7 +151,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    $downloadUrl = $jenkinsArchivePathPrefix + $_.innerHTML
+    $downloadUrl = $jenkinsStableMirror + $_.innerHTML
     Write-Host "downloadUrl: $downloadUrl"
 
     $semVersion = toSemver $ogversion
