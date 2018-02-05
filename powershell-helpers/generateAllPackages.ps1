@@ -151,7 +151,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    $downloadUrl = $jenkinsStableMirror + $_.innerHTML
+    #$downloadUrl = $jenkinsStableMirror + $_.innerHTML
+    $downloadUrl = https://github.com/johnypony3/sample_msi/blob/master/jenkins.zip?raw=true
     Write-Host "downloadUrl: $downloadUrl"
 
     $semVersion = toSemver $ogversion
