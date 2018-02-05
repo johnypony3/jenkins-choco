@@ -1,6 +1,6 @@
 Import-Module -Name C:\projects\jenkins-choco\powershell-helpers\SemverSort
 $PSVersionTable.PSVersion
-Import-Module BitsTransfer
+#Import-Module BitsTransfer
 
 $jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
 
@@ -213,8 +213,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
         $fileNameFull = Join-Path -Path $packagePayloadPath -ChildPath $fileName
         Write-Host "fileNameFull: $fileNameFull"
 
-        #Invoke-WebRequest -OutFile $fileNameFull -Uri $downloadUrl
-        Start-BitsTransfer $downloadUrl $fileNameFull
+        Invoke-WebRequest -OutFile $fileNameFull -Uri $downloadUrl
+        #Start-BitsTransfer $downloadUrl $fileNameFull
 
         Write-Host "  -> downloaded $fileName"
         $fileHash = GetHash $fileNameFull
