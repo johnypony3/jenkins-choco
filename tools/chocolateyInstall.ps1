@@ -4,8 +4,9 @@ $ErrorActionPreference = 'Stop';
 $packageName = 'jenkins'
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$zipFilePath = "$toolsDir\..\payload\$packageName.zip"
-$msiPath = "$toolsDir\..\payload\$packageName.msi"
+$payloadDir = "$toolsDir\..\payload"
+$zipFilePath = "$payloadDir\$packageName.zip"
+$msiPath = "$payloadDir\$packageName.msi"
 
 Write-Host "toolsDir: $toolsDir"
 Write-Host "zipFilePath: $zipFilePath"
@@ -13,6 +14,8 @@ Write-Host "msiPath: $msiPath"
 
 Add-Type -AssemblyName System.IO.Compression.FileSystem
 [System.IO.Compression.ZipFile]::ExtractToDirectory($zipFilePath, $msiPath)
+
+gci $payloadDir
 
 $packageArgs = @{
   packageName   = $packageName
@@ -22,6 +25,6 @@ $packageArgs = @{
   validExitCodes= @(0, 3010, 1641)
 }
 
-Write-Host "packageArgs: ($packageArgs | Out-string)"
+Write-Host "packageArgs: "($packageArgs | Out-string)
 
 Install-ChocolateyInstallPackage @packageArgs
