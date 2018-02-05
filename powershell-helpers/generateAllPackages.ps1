@@ -7,7 +7,7 @@ $jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
 
 Try {
   $WebResponse = Invoke-WebRequest $jenkinsStableMirror
-  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip'}
+  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip' -and $_.innerHTML -like '*2.89.3*'}
 }
 Catch {
   Write-Host 'error calling github'
@@ -183,7 +183,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    Write-Host "working on version: "$version
+    Write-Host "working on version:"$version
 
     $packageName = "jenkins.$version.nupkg"
     Write-Host $packageName
