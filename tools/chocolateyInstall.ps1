@@ -6,8 +6,8 @@ $packageName = 'jenkins'
 $fileName = "jenkins.zip"
 
 $toolsDir = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$zipFilePath = "$toolsDir\..\payload\$zipFile.zip"
-$msiPath = "$toolsDir\..\payload\$zipFile.msi"
+$zipFilePath = "$toolsDir\..\payload\$fileName.zip"
+$msiPath = "$toolsDir\..\payload\$fileName.msi"
 
 Write-Host "toolsDir: $toolsDir"
 Write-Host "zipFilePath: $zipFilePath"
