@@ -4,7 +4,7 @@ $jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
 
 Try {
   $WebResponse = Invoke-WebRequest $jenkinsStableMirror
-  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip' -and $_.innerHTML -like '*2.89.3*'}
+  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip'}
 }
 Catch {
   Write-Host 'error calling github'
