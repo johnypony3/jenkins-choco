@@ -29,6 +29,7 @@ Catch {
   Write-Host "exiting"
   return 1
 }
+$jenkinsInfos
 
 $packageOutputPath = Join-Path -Path $PSScriptRoot -ChildPath 'packages'
 mkdir $packageOutputPath
