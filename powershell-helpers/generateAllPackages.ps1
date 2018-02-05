@@ -8,7 +8,7 @@ $jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
 
 Try {
   $WebResponse = Invoke-WebRequest $jenkinsStableMirror
-  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*sha256'}
+  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml -notlike '*.sha256' -and $_.innerHTML -like '*.zip'}
   $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Credential $credential
 }
 Catch {
