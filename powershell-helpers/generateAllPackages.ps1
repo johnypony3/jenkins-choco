@@ -29,7 +29,6 @@ Catch {
   Write-Host "exiting"
   return 1
 }
-$jenkinsInfos
 
 $packageOutputPath = Join-Path -Path $PSScriptRoot -ChildPath 'packages'
 mkdir $packageOutputPath
@@ -157,7 +156,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    $downloadUrl = $jenkinsArchivePathPrefix + $_
+    $downloadUrl = $jenkinsArchivePathPrefix + $_.innerHTML
     Write-Host "downloadUrl: $downloadUrl"
 
     $semVersion = toSemver $ogversion
