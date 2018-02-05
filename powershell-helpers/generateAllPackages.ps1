@@ -212,7 +212,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
         Write-Host "fileNameFull: $fileNameFull"
 
         Invoke-WebRequest -OutFile $fileNameFull -Uri $downloadUrl
-        Write-Host "  -> downloaded $fileName"
+        Write-Host "  -> downloaded $fileNameFull"
         $fileHash = GetHash $fileNameFull
         $fileHashInfo = "`n`tfile: $fileName`n`tchecksum type: $checksumType`n`tchecksum: $fileHash"
         Write-Host "  -> $fileHashInfo"
