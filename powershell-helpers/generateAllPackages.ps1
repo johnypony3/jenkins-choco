@@ -2,12 +2,13 @@ Import-Module -Name C:\projects\jenkins-choco\powershell-helpers\SemverSort
 
 $secPasswd = ConvertTo-SecureString $ENV:GITHUB_PASSWORD -AsPlainText -Force
 $credential = New-Object System.Management.Automation.PSCredential($ENV:GITHUB_USERNAME, $secpasswd)
-$jenkinsInfosUrl = 'https://api.github.com/repos/jenkinsci/jenkins/git/refs/tags'
-$jenkinsRepo = 'https://api.github.com/repos/jenkinsci/jenkins'
+$jenkinsStableMirror = 'http://mirrors.jenkins-ci.org/windows-stable/'
+
+$WebResponse= Invoke-WebRequest $jenkinsStableMirror
 $jenkinsArchivePathPrefix = 'https://github.com/jenkinsci/jenkins/archive/'
 
 Try {
-  $jenkinsInfos = Invoke-RestMethod -Uri $jenkinsInfosUrl -Credential $credential
+  $jenkinsInfos = $WebResponse.Links | where {$_.innerHtml –notlike '*sha256'}
   $jenkinsRepoInfo = Invoke-RestMethod -Uri $jenkinsRepo -Credential $credential
 }
 Catch {
@@ -145,7 +146,7 @@ function GetHash{
 $jenkinsInfos | Select-Object -First 1 | % {
     $skip = $false
 
-    $ogversion = $_.ref.replace($_.ref.split("-")[0], "").replace("-", "").replace("_", ".")
+    $ogversion = $_.innerHTML.replace($_.innerHTML.split("-")[0], "").replace(".zip", "").replace("-", "")
     Write-Host "ogversion: $ogversion"
 
     $skip = [string]::IsNullOrEmpty($ogversion)
@@ -155,11 +156,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
       return;
     }
 
-    $jenkinsInfo = Invoke-RestMethod -Uri $_.url -Credential $credential
-    $jenkinsInfo = Invoke-RestMethod -Uri $jenkinsInfo.object.url -Credential $credential
-    $tag = $jenkinsInfo.tag
-
-    $downloadUrl = $jenkinsArchivePathPrefix + $tag + ".zip"
+    $downloadUrl = $jenkinsArchivePathPrefix + $_
     Write-Host "downloadUrl: $downloadUrl"
 
     $semVersion = toSemver $ogversion

@@ -15,7 +15,7 @@
     <packageSourceUrl>https://github.com/johnypony3/jenkins-choco</packageSourceUrl>
     <docsUrl>https://jenkins.io/doc/</docsUrl>
     <bugTrackerUrl>https://issues.jenkins-ci.org/secure/Dashboard.jspa</bugTrackerUrl>
-    <title>Jenkins</title>
+    <title>Jenkins CI</title>
   </metadata>
   <files>
     <file src="..\payload\**" target="payload"/>
