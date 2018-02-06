@@ -217,6 +217,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
         $fileHashInfo = "`n`tfile: $fileName`n`tchecksum type: $checksumType`n`tchecksum: $fileHash"
         Write-Host "  -> $fileHashInfo"
         Add-Content $verificationPath $fileHashInfo
+        Write-Host 'here'
     }
 
     Add-Content $verificationPath "`nThe download url for this packages release is <$downloadUrl>"
