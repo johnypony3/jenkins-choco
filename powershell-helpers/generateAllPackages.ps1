@@ -46,7 +46,7 @@ $versionPath = Join-Path -Path $PSScriptRoot -ChildPath .version
 $assetPath = Join-Path -Path $PSScriptRoot -ChildPath payload
 $checksumType = "MD5"
 
-choco apiKey -k '2ab16200-a308-4130-8ddb-78f155be2c2a' -source https://push.chocolatey.org/
+choco apiKey -k $ENV:CHOCO_KEY -source https://push.chocolatey.org/
 
 $push = $false
 
@@ -222,14 +222,16 @@ $jenkinsInfos | Select-Object -First 1 | % {
         $fileHashInfo = "`n`tfile: $fileName`n`tchecksum type: $checksumType`n`tchecksum: $fileHash"
         Write-Host "  -> $fileHashInfo"
         Add-Content $verificationPath $fileHashInfo
-        Write-Host 'here'
+        Add-Content $verificationPath "`nThe download url for this packages release is <$downloadUrl>"
     }
 
-    Add-Content $verificationPath "`nThe download url for this packages release is <$downloadUrl>"
-
-    [xml]$nuspec = Get-Content $nuspecTemplatePath
+    [xml]$nuspec = Get-Content -Path $nuspecTemplatePath
     $nuspec.package.metadata.version = $version
     $nuspec.Save($nuspecPath)
+
+    Write-Host $nuspec
+    Get-Content -Path $nuspecTemplatePath
+    Get-Content -Path $nuspecPath
 
     BuildInfoFileGenerator $ogversion
 
