@@ -228,7 +228,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
     Write-Host $nuspecPath
 
     BuildInfoFileGenerator $ogversion
-    choco pack $nuspecPath --outputdirectory $packageOutputPath
+    choco pack $nuspecPath --outputdirectory .
+    Move-Item -path .\*.nupkg -destination $packageOutputPath
 
     Write-Host "packageOutputPath: $packageOutputPath"
     Get-ChildItem -Recurse $packageOutputPath
