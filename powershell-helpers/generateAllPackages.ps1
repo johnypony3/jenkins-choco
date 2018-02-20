@@ -37,11 +37,6 @@ $verificationTemplatePath = Join-Path -Path $PSScriptRoot -ChildPath '..\templat
 $nuspecPath = Join-Path -Path $PSScriptRoot -ChildPath jenkins.nuspec
 $verificationPath = Join-Path -Path $PSScriptRoot -ChildPath ..\tools\VERIFICATION.txt
 
-Write-Host "nuspecTemplatePath: $nuspecTemplatePath"
-Write-Host "verificationTemplatePath: $verificationTemplatePath"
-Write-Host "nuspecPath: $nuspecPath"
-Write-Host "verificationPath: $verificationPath"
-
 $versionPath = Join-Path -Path $PSScriptRoot -ChildPath .version
 $assetPath = Join-Path -Path $PSScriptRoot -ChildPath payload
 $checksumType = "MD5"
@@ -229,12 +224,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $nuspec.package.metadata.version = $version
     $nuspec.Save($nuspecPath)
 
-    Write-Host $nuspec
-    Get-Content -Path $nuspecTemplatePath
-    Get-Content -Path $nuspecPath
-
     BuildInfoFileGenerator $ogversion
-
+    Write-Host 'here'
     choco pack $nuspecPath --outputdirectory $packageOutputPath
 }
 
