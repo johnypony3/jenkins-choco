@@ -225,10 +225,10 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $nuspec.Save($nuspecPath)
 
     Write-Host $nuspecPath
-    
+
     BuildInfoFileGenerator $ogversion
-    Write-Host 'here'
     choco pack $nuspecPath --outputdirectory $packageOutputPath
+    Write-Host 'here'
 }
 
 if (!($push)){
