@@ -224,6 +224,8 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $nuspec.package.metadata.version = $version
     $nuspec.Save($nuspecPath)
 
+    Write-Host $nuspecPath
+    
     BuildInfoFileGenerator $ogversion
     Write-Host 'here'
     choco pack $nuspecPath --outputdirectory $packageOutputPath
