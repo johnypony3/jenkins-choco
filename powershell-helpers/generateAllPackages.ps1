@@ -26,6 +26,7 @@ Catch {
 }
 
 $packageOutputPath = Join-Path -Path $PSScriptRoot -ChildPath 'packages'
+New-Item -path c:\ -name "Demo Folder" -type directory
 mkdir $packageOutputPath
 
 $packagePayloadPath = Join-Path -Path $PSScriptRoot -ChildPath '..\payload'
@@ -227,8 +228,10 @@ $jenkinsInfos | Select-Object -First 1 | % {
     Write-Host $nuspecPath
 
     BuildInfoFileGenerator $ogversion
-    choco pack $nuspecPath #--outputdirectory $packageOutputPath
-    Write-Host 'here'
+    choco pack $nuspecPath --outputdirectory $packageOutputPath
+
+    Write-Host "packageOutputPath: $packageOutputPath"
+    Get-ChildItem -Recurse $packageOutputPath
 }
 
 if (!($push)){
