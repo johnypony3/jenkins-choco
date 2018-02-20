@@ -229,7 +229,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     gci C:\projects\jenkins-choco\powershell-helpers -Recurse
 
     BuildInfoFileGenerator $ogversion
-    choco pack $nuspecPath --outputdirectory .
+    choco pack $nuspecPath #--outputdirectory .
     Move-Item -path .\*.nupkg -destination $packageOutputPath
 
     Write-Host "packageOutputPath: $packageOutputPath"
