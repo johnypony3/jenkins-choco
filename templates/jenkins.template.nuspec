@@ -1,27 +1,21 @@
 <?xml version='1.0' encoding='utf-8'?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/10/nuspec.xsd">
   <metadata>
-    <id>jenkins</id>
+    <authors>The Jenkins Team</authors>
+    <bugTrackerUrl>https://issues.jenkins-ci.org/secure/Dashboard.jspa</bugTrackerUrl>
+    <description>Jenkins is an application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.</description>
+    <docsUrl>https://jenkins.io/doc/</docsUrl>
+    <iconUrl>https://wiki.jenkins.io/download/attachments/2916393/logo.png</iconUrl>
+    <licenseUrl>https://jenkins.io/license/</licenseUrl>
+    <owners>johnypony3</owners>
+    <packageSourceUrl>https://github.com/johnypony3/jenkins-choco</packageSourceUrl>
+    <projectUrl>http://jenkins-ci.org</projectUrl>
+    <releaseNotes>http://jenkins-ci.org/changelog</releaseNotes>
+    <summary>Jenkins is an application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.</summary>
+    <tags>continuous-integration continuous-delivery continuous-deployment java groovy jenkins pipelines-as-code devops</tags>
     <title>Jenkins CI</title>
     <version>Jenkins</version>
-    <authors>The Jenkins Team</authors>
-    <owners>johnypony3</owners>
-    <licenseUrl>https://jenkins.io/license/</licenseUrl>
-    <projectUrl>http://jenkins-ci.org</projectUrl>
-    <iconUrl>https://wiki.jenkins.io/download/attachments/2916393/logo.png</iconUrl>
-    <description>
-Jenkins is an award-winning application that monitors executions of repeated jobs, such as building a software project or jobs run by cron. Among those things, current Jenkins focuses on the following two jobs:
-
-1. Building/testing software projects continuously, just like CruiseControl or DamageControl. In a nutshell, Jenkins provides an easy-to-use so-called continuous integration system, making it easier for developers to integrate changes to the project, and making it easier for users to obtain a fresh build. The automated, continuous build increases the productivity.
-2. Monitoring executions of externally-run jobs, such as cron jobs and procmail jobs, even those that are run on a remote machine. For example, with cron, all you receive is regular e-mails that capture the output, and it is up to you to look at them diligently and notice when it broke. Jenkins keeps those outputs and makes it easy for you to notice when something is wrong.
-
-    </description>
-    <summary>Jenkins is an application that monitors executions of repeated jobs, such as building a software project or jobs run by cron.</summary>
-    <releaseNotes>http://jenkins-ci.org/changelog</releaseNotes>
-    <tags>continuous-integration continuous-delivery continuous-deployment java groovy jenkins pipelines-as-code devops</tags>
-    <packageSourceUrl>https://github.com/johnypony3/jenkins-choco</packageSourceUrl>
-    <docsUrl>https://jenkins.io/doc/</docsUrl>
-    <bugTrackerUrl>https://issues.jenkins-ci.org/secure/Dashboard.jspa</bugTrackerUrl>
+    <id>jenkins</id>
   </metadata>
   <files>
     <file src="..\payload\**" target="payload"/>
