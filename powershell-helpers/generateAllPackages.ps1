@@ -226,6 +226,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     $nuspec.Save($nuspecPath)
 
     Write-Host $nuspecPath
+    gci C:\projects\jenkins-choco\powershell-helpers -Recursive
 
     BuildInfoFileGenerator $ogversion
     choco pack $nuspecPath --outputdirectory .
@@ -240,6 +241,6 @@ if (!($push)){
   return 0;
 }
 
-Get-ChildItem $packageOutputPath -Filter *.nupkg | % {
+Get-ChildItem . -Filter *.nupkg | % {
   choco push $_.FullName
 }
