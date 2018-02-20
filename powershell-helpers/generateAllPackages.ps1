@@ -227,7 +227,7 @@ $jenkinsInfos | Select-Object -First 1 | % {
     Write-Host $nuspecPath
 
     BuildInfoFileGenerator $ogversion
-    choco pack $nuspecPath --outputdirectory $packageOutputPath
+    choco pack $nuspecPath #--outputdirectory $packageOutputPath
     Write-Host 'here'
 }
 
