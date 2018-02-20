@@ -11,5 +11,5 @@ artifacts:
     name:      nuspec
   - path:      '**\.version'
     name:      version
-  - path:      'C:\projects\*'
+  - path:      '.\**'
     name:      everything
